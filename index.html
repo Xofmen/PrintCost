@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ViperCost — Профессиональный калькулятор 3D-печати</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="bg-glow"></div>
+    <div class="bg-grid"></div>
+
+    <div class="app-wrapper">
+        <!-- Header -->
+        <header class="header card-glass">
+            <div class="logo-area">
+                <div class="logo-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                        <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                    </svg>
+                </div>
+                <div class="brand-info">
+                    <h1>ViperCost</h1>
+                    <span class="badge">Калькулятор печати</span>
+                </div>
+            </div>
+            <button class="reset-btn" id="resetBtn" title="Сбросить все настройки к значениям по умолчанию">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+                Сбросить
+            </button>
+        </header>
+
+        <!-- Main Layout Grid -->
+        <main class="main-grid">
+            <!-- Left Inputs Column -->
+            <div class="inputs-column">
+                
+                <!-- Card 1: Filament Parameters -->
+                <div class="card card-glass">
+                    <div class="card-header">
+                        <div class="card-title-group">
+                            <span class="card-icon">🟫</span>
+                            <h2>Параметры пластика</h2>
+                        </div>
+                        <span class="card-subtitle">Расходные материалы</span>
+                    </div>
+
+                    <div class="input-group">
+                        <div class="label-row">
+                            <label for="filamentPrice">Цена катушки филамента</label>
+                            <span class="unit-label">сум</span>
+                        </div>
+                        <div class="input-with-stepper">
+                            <input type="number" id="filamentPrice" value="" placeholder="0" min="0" step="1000">
+                            <button type="button" class="step-btn" data-action="decrease" data-target="filamentPrice" data-step="10000">-</button>
+                            <button type="button" class="step-btn" data-action="increase" data-target="filamentPrice" data-step="10000">+</button>
+                        </div>
+                    </div>
+
+                    <div class="input-row-2">
+                        <div class="input-group">
+                            <div class="label-row">
+                                <label for="filamentWeight">Вес катушки</label>
+                                <span class="unit-label">грамм</span>
+                            </div>
+                            <input type="number" id="filamentWeight" value="1000" placeholder="0" min="1" step="50">
+                        </div>
+                        <div class="input-group">
+                            <div class="label-row">
+                                <label for="modelWeight">Вес модели</label>
+                                <span class="unit-label">грамм</span>
+                            </div>
+                            <input type="number" id="modelWeight" value="" placeholder="0" min="0" step="1">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2: Time & Energy -->
+                <div class="card card-glass">
+                    <div class="card-header">
+                        <div class="card-title-group">
+                            <span class="card-icon">⚡</span>
+                            <h2>Время и электроэнергия</h2>
+                        </div>
+                        <span class="card-subtitle">Ресурсы принтера</span>
+                    </div>
+
+                    <div class="input-group">
+                        <div class="label-row">
+                            <label for="printTime">Время печати</label>
+                            <span class="unit-label" id="printTimeUnitLabel">0 ч.</span>
+                        </div>
+                        <div class="input-with-stepper">
+                            <input type="number" id="printTime" value="" placeholder="0" min="0" step="0.5">
+                            <button type="button" class="step-btn" data-action="decrease" data-target="printTime" data-step="0.5">-</button>
+                            <button type="button" class="step-btn" data-action="increase" data-target="printTime" data-step="0.5">+</button>
+                        </div>
+                    </div>
+
+                    <div class="input-row-2">
+                        <div class="input-group">
+                            <div class="label-row">
+                                <label for="printerPower">Мощность</label>
+                                <span class="unit-label">Вт</span>
+                            </div>
+                            <input type="number" id="printerPower" value="200" min="10" step="10">
+                        </div>
+                        <div class="input-group">
+                            <div class="label-row">
+                                <label for="energyCost">Тариф 1 кВт·ч</label>
+                                <span class="unit-label">сум</span>
+                            </div>
+                            <input type="number" id="energyCost" value="650" min="0" step="50">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3: Markup & Depreciation -->
+                <div class="card card-glass">
+                    <div class="card-header">
+                        <div class="card-title-group">
+                            <span class="card-icon">📈</span>
+                            <h2>Наценка и амортизация</h2>
+                        </div>
+                        <span class="card-subtitle">Прибыль и расходы</span>
+                    </div>
+
+                    <div class="input-group slider-group">
+                        <div class="label-row">
+                            <label for="markupPercent">Процент наценки</label>
+                            <span class="highlight-percent" id="markupValueDisplay">100%</span>
+                        </div>
+                        <div class="range-wrapper">
+                            <input type="range" id="markupPercent" min="0" max="300" value="100" step="5">
+                        </div>
+                        <div class="slider-marks">
+                            <span>0% (Себестоимость)</span>
+                            <span>150%</span>
+                            <span>300%</span>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <div class="label-row">
+                            <label for="extraCost">Амортизация и доп. расходы (износ, упаковка)</label>
+                            <span class="unit-label">сум</span>
+                        </div>
+                        <input type="number" id="extraCost" value="5000" min="0" step="500">
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right Results Column -->
+            <div class="results-column">
+                <div class="card card-glass results-card sticky-card">
+                    <div class="card-header results-header">
+                        <div class="card-title-group">
+                            <span class="card-icon">🧮</span>
+                            <h2>Подробный расчет</h2>
+                        </div>
+                        <span class="status-badge">Готово к продаже</span>
+                    </div>
+
+                    <div class="breakdown-list">
+                        <div class="breakdown-item">
+                            <span class="label" id="filamentBreakdownLabel">Пластик ( 0 г ):</span>
+                            <span class="value" id="resFilamentCost">0 сум</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="label" id="energyBreakdownLabel">⚡ Электричество ( 0 ч ):</span>
+                            <span class="value" id="resEnergyCost">0 сум</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="label">🛠 Амортизация:</span>
+                            <span class="value" id="resExtraCost">5 000 сум</span>
+                        </div>
+                        <div class="divider"></div>
+                        <div class="breakdown-item total-row">
+                            <span class="label">Чистая себестоимость:</span>
+                            <span class="value" id="resBaseCost">5 000 сум</span>
+                        </div>
+                        <div class="breakdown-item profit-row">
+                            <span class="label" id="profitBreakdownLabel">📈 Прибыль ( 100 %):</span>
+                            <span class="value" id="resProfit">+ 5 000 сум</span>
+                        </div>
+                    </div>
+
+                    <!-- Final Big Box -->
+                    <div class="final-price-box">
+                        <span class="final-title">ИТОГОВАЯ ЦЕНА ДЛЯ КЛИЕНТА</span>
+                        <div class="final-amount" id="resFinalPrice">10 000 <span>сум</span></div>
+                        <p class="final-desc">Рекомендуемая стоимость с учетом всех расходов и маржи.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>ViperCost © 2026 — Профессиональный калькулятор расчета себестоимости 3D-печати в сумах</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
